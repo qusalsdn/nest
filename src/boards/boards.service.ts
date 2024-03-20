@@ -39,6 +39,11 @@ export class BoardsService {
   }
 
   deleteBoard(id: string): Board[] {
+    const found = this.getBoardById(id);
+    if (!found)
+      throw new NotFoundException(
+        `'${id}' id를 가진 게시물은 존재하지 않습니다.`,
+      );
     this.boards = this.boards.filter((board) => board.id !== id);
     return this.boards;
   }
