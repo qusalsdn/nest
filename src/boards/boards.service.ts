@@ -2,9 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Board, BoardStatus } from './board.model';
 import { v1 as uuid } from 'uuid';
 import { createBoardDto } from './dto/create-board.dto';
+import { Board as boardRepository } from './board.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class BoardsService {
+  constructor(
+    @InjectRepository(boardRepository)
+    private boardRepository: Repository<Board>,
+  ) {}
+
   private boards: Board[] = [];
 
   createBoard(createBoardDto: createBoardDto): Board {
